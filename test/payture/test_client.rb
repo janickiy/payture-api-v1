@@ -117,31 +117,31 @@ describe "Client" do
 
 
   describe "PaytureApi" do
-    let(:client) { Payture::Api::V1::Client.new({api_type: 'api'}) }
-
-    it "api_methods" do
-      api_methods = Payture::Api::V1::Client::PaytureApi::API_METHODS.map(&:to_snakecase)
-      client.api_methods.must_equal api_methods
+    it "respond to pay" do
+      client = Payture::Api::V1::Client.new({api_type: 'api'})
+      client.api_methods.each do |method|
+        client.send(method.to_snakecase.to_sym)
+      end
     end
   end
 
 
   describe "PaytureApim" do
-    let(:client) { Payture::Api::V1::Client.new({api_type: 'apim'}) }
-
-    it "api_methods" do
-      api_methods = Payture::Api::V1::Client::PaytureApim::API_METHODS.map(&:to_snakecase)
-      client.api_methods.must_equal api_methods
+    it "respond to pay" do
+      client = Payture::Api::V1::Client.new({api_type: 'apim'})
+      client.api_methods.each do |method|
+        client.send(method.to_snakecase.to_sym)
+      end
     end
   end
 
 
   describe "PaytureVwapi" do
-    let(:client) { Payture::Api::V1::Client.new({api_type: 'vwapi'}) }
-
-    it "api_methods" do
-      api_methods = Payture::Api::V1::Client::PaytureVwapi::API_METHODS.map(&:to_snakecase)
-      client.api_methods.must_equal api_methods
+    it "respond to pay" do
+      client = Payture::Api::V1::Client.new({api_type: 'apim'})
+      client.api_methods.each do |method|
+        client.send(method.to_snakecase.to_sym)
+      end
     end
   end
 
