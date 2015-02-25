@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/payture-api-v1.png)](http://badge.fury.io/rb/payture-api-v1)
 [![Build Status](https://secure.travis-ci.org/endorfin/payture-api-v1.png?branch=master)](https://travis-ci.org/endorfin/payture-api-v1)
-[![Coverage Status](https://coveralls.io/repos/endorfin/payture-api-v1/badge.svg)](https://coveralls.io/r/endorfin/payture-api-v1)
+[![Coverage Status](https://coveralls.io/repos/endorfin/payture-api-v1/badge.svg?branch=master)](https://coveralls.io/r/endorfin/payture-api-v1?branch=master)
 
 This library provides a wrapper to Version 1 of the Payture API
 
