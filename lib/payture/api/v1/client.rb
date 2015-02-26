@@ -12,32 +12,20 @@ module Payture::Api::V1
 
       @api_methods = %w(Pay Block Charge Unblock Refund GetState) if 'api' == self.api_type
       @api_methods = %w(Init Pay Charge Unblock Refund PayStatus) if 'apim' == self.api_type
-      @api_methods = %w(Register Update Delete Add Activate Remove GetList Init Pay SendCode Charge Unblock Refund PayStatus) if 'apim' == self.api_type
+      @api_methods = %w(Register Update Delete Add Activate Remove GetList Init Pay SendCode Charge Unblock Refund PayStatus) if 'vwapi' == self.api_type
+
+      @api_methods.map{|method| define_api_method(method.to_snakecase)}
+    end
+
+    def define_api_method(name, *args)
+      self.class.send(:define_method,name) do
+        # call api ...
+      end
     end
 
     def url
       "https://#{host}.#{Configuration::DOMAIN}/#{api_type}/"
     end
-
-    def method_missing(method, *args, &block)
-      if @api_methods.include?(method.to_s.to_camelcase)
-        self.class.send :define_method, method do
-          puts method # Do something ... call the api
-        end
-        self.send(method)
-      else
-        super
-      end
-    end
-
-    def respond_to?(method, include_private = false)
-      if @api_methods.include?(method.to_s.to_camelcase)
-        true
-      else
-        super
-      end
-    end
-
   end
 
 end
