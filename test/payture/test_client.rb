@@ -8,7 +8,7 @@ describe "Client" do
     @default_configuration = {
       api_type: 'api',
       host: 'sandbox',
-      key: 'MerchantKey',
+      key: 'Merchant',
       password: nil,
       user_agent: "Payture API V1 Ruby Gem #{Payture::Api::V1::VERSION}"
     }
@@ -35,10 +35,6 @@ describe "Client" do
         client.send(key).must_equal @default_configuration[key]
       end
     end
-
-    it "shoud have valid url" do
-      client.url.must_equal 'https://sandbox.payture.com/api/'
-    end
   end
 
 
@@ -58,10 +54,6 @@ describe "Client" do
         client.send(key).must_equal value
       end
     end
-
-    it "shoud have valid default url" do
-      client.url.must_equal 'https://secure.payture.com/vwapi/'
-    end
   end
 
 
@@ -74,10 +66,6 @@ describe "Client" do
           client.send(key).must_equal @custom_configuration[key]
         end
       end
-
-      it "shoud have valid default url" do
-        client.url.must_equal 'https://secure.payture.com/vwapi/'
-      end
     end
   end
 
@@ -89,10 +77,6 @@ describe "Client" do
       @keys.each do |key|
         client.send(key).must_equal @custom_configuration[key]
       end
-    end
-
-    it "shoud have valid default url" do
-      client.url.must_equal 'https://secure.payture.com/vwapi/'
     end
   end
 
@@ -107,34 +91,6 @@ describe "Client" do
     it "should override module configuration after init" do
       @keys.each do |key|
         client.send(key).must_equal @custom_configuration[key]
-      end
-    end
-
-    it "shoud have valid default url" do
-      client.url.must_equal 'https://secure.payture.com/vwapi/'
-    end
-  end
-
-
-  describe ".api_methods" do
-    it "respond to api methods for api type: api" do
-      client = Payture::Api::V1::Client.new({api_type: 'api'})
-      client.api_methods.each do |method|
-        client.must_respond_to method.to_snakecase.to_sym
-      end
-    end
-
-    it "respond to api methods for api type: apim" do
-      client = Payture::Api::V1::Client.new({api_type: 'apim'})
-      client.api_methods.each do |method|
-        client.must_respond_to method.to_snakecase.to_sym
-      end
-    end
-
-    it "respond to api methods for api type: vwapi" do
-      client = Payture::Api::V1::Client.new({api_type: 'vwapi'})
-      client.api_methods.each do |method|
-        client.must_respond_to method.to_snakecase.to_sym
       end
     end
   end

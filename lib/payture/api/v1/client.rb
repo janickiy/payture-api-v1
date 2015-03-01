@@ -1,6 +1,8 @@
 module Payture::Api::V1
 
   class Client
+    Dir[File.expand_path("../client/*.rb", __FILE__)].each{|f| require f}
+
     attr_accessor *Configuration::VALID_OPTIONS_KEYS
     attr_reader :api_methods
 
@@ -10,21 +12,17 @@ module Payture::Api::V1
         send("#{key}=", options[key])
       end
 
-      @api_methods = %w(Pay Block Charge Unblock Refund GetState) if 'api' == self.api_type
-      @api_methods = %w(Init Pay Charge Unblock Refund PayStatus) if 'apim' == self.api_type
-      @api_methods = %w(Register Update Delete Add Activate Remove GetList Init Pay SendCode Charge Unblock Refund PayStatus) if 'vwapi' == self.api_type
-
-      @api_methods.map{|method| define_api_method(method.to_snakecase)}
+      self.class.send(:include, Client::PaytureApi) if 'api' == self.api_type
+      self.class.send(:include, Client::PaytureApim) if 'apim' == self.api_type
+      self.class.send(:include, Client::PaytureVwapi) if 'vwapi' == self.api_type
     end
 
-    def define_api_method(name, *args)
-      self.class.send(:define_method,name) do
-        # call api ...
-      end
+    def make_request(method, params)
+      Request.new(url_for(method), params)
     end
 
-    def url
-      "https://#{host}.#{Configuration::DOMAIN}/#{api_type}/"
+    def url_for(method)
+      "https://#{host}.#{Configuration::DOMAIN}/#{api_type}/#{method}"
     end
   end
 

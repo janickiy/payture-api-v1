@@ -30,4 +30,5 @@ guard :minitest do
 
   watch(%r{^lib/(.*/)?([^/]+)\.rb$})     { |m| "test/#{m[1]}test_#{m[2]}.rb" }
   watch(%r{^lib/payture/api/v1/(.*/)?([^/]+)\.rb$})     { |m| "test/payture/test_#{m[2]}.rb" }
+  watch(%r{^lib/payture/api/v1/client(.*/)?([^/]+)\.rb$})     { |m| "test/payture/client/test_#{m[2]}.rb" }
 end

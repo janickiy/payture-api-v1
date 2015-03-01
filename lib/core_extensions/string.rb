@@ -3,7 +3,9 @@ class String
     self.scan(/[A-Z][a-z]*/).join('_').downcase
   end
 
-  def to_camelcase
-    self.split('_').map(&:capitalize).join
+  def to_camelcase(mappings=[])
+    retval = self.split('_').map(&:capitalize).join
+    mappings.each {|k,v| retval.sub!(k,v)}
+    retval
   end
 end

@@ -7,7 +7,7 @@ module Payture
 
         DEFAULT_API_TYPE = 'api' # api, apim, vwapi
         DEFAULT_HOST = 'sandbox' # sandbox, secure
-        DEFAULT_KEY = 'MerchantKey'
+        DEFAULT_KEY = 'Merchant'
         DEFAULT_PASSWORD = nil
         DEFAULT_USER_AGENT  = "Payture API V1 Ruby Gem #{Payture::Api::V1::VERSION}".freeze
 
