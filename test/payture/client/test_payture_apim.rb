@@ -1,6 +1,6 @@
 require 'minitest_helper'
 
-describe "PaytureApim" do
+describe "PaytureApim", vcr: true do
 
   after do
     Payture::Api::V1.reset

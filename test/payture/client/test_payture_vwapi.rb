@@ -1,6 +1,6 @@
 require 'minitest_helper'
 
-describe "PaytureVwapi" do
+describe "PaytureVwapi", vcr: true do
 
   let(:client) { Payture::Api::V1::Client.new(api_type: 'vwapi') }
 

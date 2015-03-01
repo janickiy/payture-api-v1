@@ -1,8 +1,16 @@
 require 'minitest_helper'
 
-describe "PaytureApi" do
+describe "PaytureApi", :vcr do
 
-  let(:client) { Payture::Api::V1::Client.new(api_type: 'api', key: 'Merchant', password: '123') }
+  before do
+    VCR.insert_cassette name
+  end
+
+  after do
+    VCR.eject_cassette
+  end
+
+  let(:client_api) { Payture::Api::V1::Client.new(api_type: 'api', key: 'Merchant', password: '123') }
   let(:order_id) { SecureRandom.hex }
   let(:amount) { 12156 }
   let(:pay_info) do
@@ -18,48 +26,48 @@ describe "PaytureApi" do
   end
 
   it "instance has api_type = api" do
-    client.api_type.must_equal 'api'
+    client_api.api_type.must_equal 'api'
   end
 
   it "pay" do
-    result = client.pay(pay_info, order_id, amount)
+    result = client_api.pay(pay_info, order_id, amount)
     result[:success].must_equal 'True'
   end
 
   it "block" do
-    result = client.block(pay_info, order_id, amount)
+    result = client_api.block(pay_info, order_id, amount)
     result[:success].must_equal 'True'
   end
 
   it "charge" do
-    result = client.block(pay_info, order_id, amount)
+    result = client_api.block(pay_info, order_id, amount)
     order_id = result[:order_id]
 
-    result = client.charge(order_id)
+    result = client_api.charge(order_id)
     result[:success].must_equal 'True'
   end
 
   it "unblock" do
-    result = client.block(pay_info, order_id, amount)
+    result = client_api.block(pay_info, order_id, amount)
     order_id = result[:order_id]
 
-    result = client.unblock(order_id, amount)
+    result = client_api.unblock(order_id, amount)
     result[:success].must_equal 'True'
   end
 
   it "refund" do
-    result = client.pay(pay_info, order_id, amount)
+    result = client_api.pay(pay_info, order_id, amount)
     order_id = result[:order_id]
 
-    result = client.refund(order_id, amount)
+    result = client_api.refund(order_id, amount)
     result[:success].must_equal 'True'
   end
 
   it "get_state" do
-    result = client.pay(pay_info, order_id, amount)
+    result = client_api.pay(pay_info, order_id, amount)
     order_id = result[:order_id]
 
-    result = client.get_state(order_id)
+    result = client_api.get_state(order_id)
     result[:success].must_equal 'True'
   end
 
