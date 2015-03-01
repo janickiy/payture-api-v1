@@ -12,9 +12,13 @@ module Payture::Api::V1
         send("#{key}=", options[key])
       end
 
-      self.class.send(:include, Client::PaytureApi) if 'api' == self.api_type
-      self.class.send(:include, Client::PaytureApim) if 'apim' == self.api_type
-      self.class.send(:include, Client::PaytureVwapi) if 'vwapi' == self.api_type
+      if 'api' == self.api_type
+        class << self; include Client::PaytureApi; end
+      elsif 'apim' == self.api_type
+        class << self; include Client::PaytureApim; end
+      elsif 'vwapi' == self.api_type
+        class << self; include Client::PaytureVwapi; end
+      end
     end
 
     def make_request(method, params)
